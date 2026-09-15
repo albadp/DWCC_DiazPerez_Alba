@@ -24,9 +24,12 @@
 let name = prompt("Introduce tu nombre: ")
 let years = parseInt(prompt("Introduce tu edad: "))
 
-console.log(`Tu nombre es ${name} y tienes ${years} años.`)
+let mayorDeEdad=""`Tu nombre es ${name} y tienes ${years} años. `
 if (years >= 18){
-    console.log("Eres mayor de edad")
+    mayorDeEdad+="Eres mayor de edad"
 } else{
-    console.log("Eres menor de edad")
+    mayorDeEdad+="Eres menor de edad"
 }
+
+console.log(mayorDeEdad)
+alert(mayorDeEdad)

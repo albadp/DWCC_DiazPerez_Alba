@@ -23,3 +23,22 @@
  *             ¿Qué pasa si introducimos una cadena en vez de un número?
  *
  ***************************************************************************************************************/
+
+let numero1 = prompt("Introduce el primer número:")
+let numero2 = prompt("Introduce el segundo número:")
+
+let suma = Number(numero1) + Number(numero2)
+let resta = Number(numero1) - Number(numero2)
+let multiplicacion = Number(numero1) * Number(numero2)
+let division = Number(numero1) / Number(numero2)
+
+if((Number(numero1) = Number.NaN) && (Number(numero2) = Number.NaN)){
+    alert("Introduce un número en formato de dígito!")
+} else {
+    console.log(`La suma de numero1 y numero2 es: ${suma.toFixed(2)}`)
+    console.log(`La resta de numero1 y numero2 es: ${resta.toFixed(2)}`)
+    console.log(`El producto de numero1 y numero2 es: ${multiplicacion.toFixed(2)}`)
+    console.log(`La division de numero1 entre numero2 es: ${division.toFixed(2)}`)
+}
+
+

@@ -16,3 +16,33 @@
  *             La edad no puede ser superior a 120
  *
  ***************************************************************************************************************/
+
+let edad = prompt("Introduce tu edad:")
+
+if(Number.isInteger(edad)){
+//    if(edad < 30){
+//        console.log("! Ponte a trabajar !")
+//    } else if (edad > 30 && edad < 65){
+//        console.log("! Que ganas tengo de jubilarme !")
+//    } else if(edad > 65 && edad < 120){
+//        console.log("! Descansa un poco !")
+//    } else{
+//        alert("La edad no puede ser superior a 120")
+//    }
+
+    switch(edad){
+        case edad < 30:
+            console.log("! Ponte a trabajar !")
+            break
+        case edad > 30 && edad < 65:
+            console.log("! Que ganas tengo de jubilarme !")
+            break
+        case edad > 65 && edad < 120:
+            console.log("! Descansa un poco !")
+            break
+        case edad > 120:
+            alert("La edad no puede ser superior a 120")
+            break
+    }
+}
+

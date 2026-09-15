@@ -18,3 +18,13 @@
  *
  *
  ***************************************************************************************************************/
+
+let fahrenheit = prompt("Introduce los grados Fahrenheit:")
+
+let celsius = 5/9 + (fahrenheit-32)
+
+if (fahrenheit == Number.NaN){
+    alert("Introduce un número en formato dígito!")
+} else{
+    console.log(Number(celsius.toFixed(2)))
+}
