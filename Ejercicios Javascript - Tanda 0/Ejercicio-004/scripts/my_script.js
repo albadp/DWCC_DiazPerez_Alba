@@ -17,32 +17,43 @@
  *
  ***************************************************************************************************************/
 
-let edad = prompt("Introduce tu edad:")
+function pedirEdad(message){
+    let edad = parseInt(prompt(message))
+    while ((isNaN(edad)) || (edad < 0 || edad > 120)){
+        alert("Tienes que introducir un número entre 0 y 120")
+        edad = parseInt(prompt(message))
+    }
+    return edad
+}
 
-if(Number.isInteger(edad)){
-//    if(edad < 30){
-//        console.log("! Ponte a trabajar !")
-//    } else if (edad > 30 && edad < 65){
-//        console.log("! Que ganas tengo de jubilarme !")
-//    } else if(edad > 65 && edad < 120){
-//        console.log("! Descansa un poco !")
-//    } else{
-//        alert("La edad no puede ser superior a 120")
-//    }
+function mensajeIf(edad){
+    if(edad < 30){
+        console.log("! Ponte a trabajar !")
+    } else if ((edad > 30) && (edad < 65)){
+        console.log("! Que ganas tengo de jubilarme !")
+    } else {
+        console.log("! Descansa un poco !")
+    } 
+}
 
+function mensajeSwitch(edad){
     switch(edad){
-        case edad < 30:
+        case (edad >= 0) && (edad < 30):
             console.log("! Ponte a trabajar !")
             break
-        case edad > 30 && edad < 65:
+        case (edad > 30) && (edad < 65):
             console.log("! Que ganas tengo de jubilarme !")
             break
-        case edad > 65 && edad < 120:
+        default:
             console.log("! Descansa un poco !")
-            break
-        case edad > 120:
-            alert("La edad no puede ser superior a 120")
             break
     }
 }
+
+let edad = pedirEdad("Introduce tu edad:")
+
+console.log(mensajeSwitch(edad))
+
+
+
 

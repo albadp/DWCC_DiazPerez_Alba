@@ -19,12 +19,16 @@
  *
  ***************************************************************************************************************/
 
-let fahrenheit = prompt("Introduce los grados Fahrenheit:")
-
-let celsius = 5/9 + (fahrenheit-32)
-
-if (fahrenheit == Number.NaN){
-    alert("Introduce un número en formato dígito!")
-} else{
-    console.log(Number(celsius.toFixed(2)))
+function pedirFloatante(message){
+    let fahrenheit = parseFloat(prompt(message))
+    while (isNaN(fahrenheit)){
+        alert("Tienes que introducir un numero")
+        fahrenheit = parseFloat(prompt(message))
+    }
+    return fahrenheit
 }
+
+const toCelsius=fahrenheit=>(5/9 + (fahrenheit-32)).toFixed(2)
+
+let fahrenheit=pedirFloatante("Introduce los grados Fahrenheit:")
+console.log(toCelsius(fahrenheit))

@@ -32,7 +32,7 @@ let resta = Number(numero1) - Number(numero2)
 let multiplicacion = Number(numero1) * Number(numero2)
 let division = Number(numero1) / Number(numero2)
 
-if((Number(numero1) = Number.NaN) && (Number(numero2) = Number.NaN)){
+if(isNaN.numero1 && isNaN.numero2){
     alert("Introduce un número en formato de dígito!")
 } else {
     console.log(`La suma de numero1 y numero2 es: ${suma.toFixed(2)}`)

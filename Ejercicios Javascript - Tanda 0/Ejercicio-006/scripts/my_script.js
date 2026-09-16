@@ -13,3 +13,10 @@
  *                   El número de caramelos que sobran es: YYYY
  *
  ***************************************************************************************************************/
+
+let nCaramelos = prompt("Introduce el número de caramelos: ")
+let nPeques = prompt("Introduce el número de niños: ")
+
+console.log(`El número de caramelos por niño es: `)
+
+

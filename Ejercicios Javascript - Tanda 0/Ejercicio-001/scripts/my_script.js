@@ -24,7 +24,7 @@
 let name = prompt("Introduce tu nombre: ")
 let years = parseInt(prompt("Introduce tu edad: "))
 
-let mayorDeEdad=""`Tu nombre es ${name} y tienes ${years} años. `
+let mayorDeEdad=`Tu nombre es ${name} y tienes ${years} años. `
 if (years >= 18){
     mayorDeEdad+="Eres mayor de edad"
 } else{
