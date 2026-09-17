@@ -37,7 +37,7 @@ function mensajeIf(edad){
 }
 
 function mensajeSwitch(edad){
-    switch(edad){
+    switch(true){
         case (edad >= 0) && (edad < 30):
             console.log("! Ponte a trabajar !")
             break
