@@ -24,36 +24,40 @@
 
 
 function pedirNota(message){
-    
+    let nota = parseInt(prompt(message))
+    while ((isNaN(nota)) || (nota < 0 || nota > 100)){
+        alert("Tienes que introducir un número entre 0 y 100")
+        nota = parseInt(prompt(message))
+    }
+    return nota
 }
 
-let nota = prompt("Introduce la nota del examen: ")
-let salida = "El examen se cualifica con un"
-
-if (Number.isInteger(nota)){
-    switch(true){
-        case (nota < 0):
-            alert("Nota incorrecta: tiene que ser entre 0 y 100")
-            break
-        case (nota >= 0 && nota < 50):
-            console.log(`${salida} Suspenso`)
-            break
-        case (nota >= 50 && nota < 60):
-            console.log(`${salida} Aprobado`)
-            break
-        case (nota >= 60 && nota < 70):
-            console.log(`${salida} Bien`)
-            break
-        case (nota >= 70 && nota < 90):
-            console.log(`${salida} Notable`)
-            break
-        case (nota >= 90 && nota < 100):
-            console.log(`${salida} Sobresaliente`)
-            break
-        case (nota == 100):
-            console.log(`${salida} Matricula de honor`)
-            break
-        case (nota > 100):
-            alert("Nota incorrecta: tiene que ser entre 0 y 100")
+function darNota(message2, nota){
+    if (Number.isInteger(nota)){
+        switch(true){
+            case (nota >= 0 && nota < 50):
+                return(`${message2} Suspenso`)
+                break
+            case (nota >= 50 && nota < 60):
+                return(`${message2} Aprobado`)
+                break
+            case (nota >= 60 && nota < 70):
+                return(`${message2} Bien`)
+                break
+            case (nota >= 70 && nota < 90):
+                return(`${message2} Notable`)
+                break
+            case (nota >= 90 && nota < 100):
+                return(`${message2} Sobresaliente`)
+                break
+            case (nota == 100):
+                return(`${message2} Matricula de honor`)
+                break
+        }
     }
 }
+
+let nota = pedirNota("Introduce la nota del examen: ")
+
+console.log(`${darNota("El examen se cualifica con un", nota)}`)
+

@@ -14,9 +14,31 @@
  *
  ***************************************************************************************************************/
 
-let nCaramelos = prompt("Introduce el número de caramelos: ")
-let nPeques = prompt("Introduce el número de niños: ")
+function pedirNum(message){
+    let nVar = parseInt(prompt(message))
+    while (isNaN(nVar)){
+        alert("Tienes que introducir un número")
+        nVar = parseInt(prompt(message))
+    }
+    return nVar
+}
 
-console.log(`El número de caramelos por niño es: `)
+function asignarValor(message1, message2){
+    let nCaramelos = pedirNum(message1)
+    let nPeques = pedirNum(message2)
+    return { nCaramelos, nPeques }
+}
 
+function calculoDiv(caramelos, peques){
+    return caramelos/peques
+}
+
+function calculoMod(caramelos, peques){
+    return caramelos%peques
+}
+
+let { nCaramelos, nPeques } = asignarValor("Introduce el número de caramelos: ", "Introduce el número de niños: ")
+
+console.log(`El número de caramelos por niño es: ${calculoDiv(nCaramelos, nPeques)}`)
+console.log(`El número de caramelos que sobran es: ${calculoMod(nCaramelos,nPeques)}`)
 

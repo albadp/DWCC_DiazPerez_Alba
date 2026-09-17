@@ -22,3 +22,14 @@
  *   Nota: Formatea la salida en el documento HTML empleando una tabla con 5 columnas y nueve filas
  *
  ***************************************************************************************************************/
+
+function pedirNum(message){
+    let num = parseInt(prompt(message))
+    while (isNaN(num) || (num < 1 || num > 9)){
+        alert("Tienes que introducir un número del 1 al 9:")
+        num = parseInt(prompt(message))
+    }
+    return num
+}
+
+let num = pedirNum("Introduce un número del 1 al 9:")
