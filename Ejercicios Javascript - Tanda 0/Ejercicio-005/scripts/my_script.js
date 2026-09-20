@@ -2,7 +2,7 @@
  *
  *   Objetivo: Reflexionar sobre el tipo de estructura de programación a emplear que permita resolver la tarea
  *             de la forma más eficiente
- *             
+ *
  *
  *   Tarea: Solicita al usuario el porcentaje de acierto en un examen tipo test y muestra la cualificación según la nota
  *          según la siguiente tabla
@@ -22,42 +22,116 @@
  *
  ***************************************************************************************************************/
 
+function getDato(message, type, min = -Infinity, max = Infinity) {
+  let end = false;
+  let dato;
 
-function pedirNota(message){
-    let nota = parseInt(prompt(message))
-    while ((isNaN(nota)) || (nota < 0 || nota > 100)){
-        alert("Tienes que introducir un número entre 0 y 100")
-        nota = parseInt(prompt(message))
+  do {
+    dato = prompt(message);
+    switch (type) {
+      case "int":
+        dato =
+          isNaN(dato) ||
+          parseInt(dato) !== parseFloat(dato) ||
+          dato < min ||
+          dato > max
+            ? NaN
+            : parseInt(dato);
+        end = isNaN(dato) ? false : true;
+        break;
+      case "float":
+        dato = isNaN(dato) || dato < min || dato > max ? NaN : parseFloat(dato);
+        end = isNaN(dato) ? false : true;
+        break;
+      case "string":
+        end = true;
+        break;
     }
-    return nota
+    if (!end) {
+      alert("Tipo de dato incorrecto o no está entre los límites");
+    }
+  } while (!end);
+  return dato;
 }
 
-function darNota(message2, nota){
-    if (Number.isInteger(nota)){
-        switch(true){
-            case (nota >= 0 && nota < 50):
-                return(`${message2} Suspenso`)
-                break
-            case (nota >= 50 && nota < 60):
-                return(`${message2} Aprobado`)
-                break
-            case (nota >= 60 && nota < 70):
-                return(`${message2} Bien`)
-                break
-            case (nota >= 70 && nota < 90):
-                return(`${message2} Notable`)
-                break
-            case (nota >= 90 && nota < 100):
-                return(`${message2} Sobresaliente`)
-                break
-            case (nota == 100):
-                return(`${message2} Matricula de honor`)
-                break
-        }
-    }
+/*
+// Otra forma de hacerlo empleando programación funcional
+
+const CUALIFICACIONES = [
+  {
+    cualificacion: "Matricula de honor",
+    limInf: 100,
+    limSup: 101,
+  },
+  {
+    cualificacion: "Sobresaliente",
+    limInf: 90,
+    limSup: 100,
+  },
+  {
+    cualificacion: "Notable",
+    limInf: 70,
+    limSup: 90,
+  },
+  {
+    cualificacion: "Bien",
+    limInf: 60,
+    limSup: 70,
+  },
+  {
+    cualificacion: "Aprobado",
+    limInf: 50,
+    limSup: 60,
+  },
+  {
+    cualificacion: "Suspenso",
+    limInf: 0,
+    limSup: 50,
+  },
+];
+
+function getCualificacion(nota) {
+  let message = CUALIFICACIONES.find(
+    (el) => nota >= el.limInf && nota < el.limSup
+  ).cualificacion;
+  
+  return message == "Matricula de honor"
+    ? `El examen se cualifica con una ${message}`
+    : `El examen se cualifica con un ${message}`;
+}
+*/
+
+function getCualificacion(nota) {
+  let message = "";
+  switch (true) {
+    case nota >= 0 && nota <= 49:
+      message = "suspenso";
+      break;
+    case nota >= 50 && nota <= 59:
+      message = "aprobado";
+      break;
+    case nota >= 60 && nota <= 69:
+      message = "bien";
+      break;
+    case nota >= 70 && nota <= 89:
+      message = "notable";
+      break;
+    case nota >= 90 && nota <= 99:
+      message = "sobresaliente";
+      break;
+    case nota == 100:
+      message = "matricula de honor";
+      break;
+  }
+  return message == "matricula de honor"
+    ? `El examen se cualifica con una ${message}`
+    : `El examen se cualifica con un ${message}`;
 }
 
-let nota = pedirNota("Introduce la nota del examen: ")
+function showCualificacion(cualificacion) {
+  alert(cualificacion);
+}
 
-console.log(`${darNota("El examen se cualifica con un", nota)}`)
-
+let nota = getDato("Introduce tu nota:", "int", 0, 100);
+let cualificacion = getCualificacion(nota);
+showCualificacion(cualificacion);

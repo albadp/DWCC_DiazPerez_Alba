@@ -24,21 +24,41 @@
  *
  ***************************************************************************************************************/
 
-let numero1 = prompt("Introduce el primer número:")
-let numero2 = prompt("Introduce el segundo número:")
+/*
+Dado que tenemos que solicitar dos números comprobando que sean enteros 
+es preferible emplear una función
+*/
 
-let suma = Number(numero1) + Number(numero2)
-let resta = Number(numero1) - Number(numero2)
-let multiplicacion = Number(numero1) * Number(numero2)
-let division = Number(numero1) / Number(numero2)
-
-if(isNaN.numero1 && isNaN.numero2){
-    alert("Introduce un número en formato de dígito!")
-} else {
-    console.log(`La suma de numero1 y numero2 es: ${suma.toFixed(2)}`)
-    console.log(`La resta de numero1 y numero2 es: ${resta.toFixed(2)}`)
-    console.log(`El producto de numero1 y numero2 es: ${multiplicacion.toFixed(2)}`)
-    console.log(`La division de numero1 entre numero2 es: ${division.toFixed(2)}`)
+function getInteger(message) {
+  let dato = prompt(message);
+  while (isNaN(dato) || parseInt(dato) !== parseFloat(dato)) {
+    alert("Error: El número debe ser un entero !");
+    dato = prompt(message);
+  }
+  return parseInt(dato);
 }
 
+// Podríamos haber definido funciones para realizar los cálculos:
+const suma = (num1, num2) => num1 + num2;
+//o emplear expresiones directamente en el template string ${numero1-numero2}
 
+// Función que muestra el resultado
+function showMessage(numero1, numero2) {
+  console.log(`La suma de numero1 y numero2 es: ${suma(numero1, numero2)}`);
+  console.log(`La resta de numero1 y numero2 es: ${numero1 - numero2}`);
+  console.log(
+    `La multiplicación de numero1 y numero2 es: ${numero1 * numero2}`
+  );
+
+  // ¿ Qué pasa si numero1 y numero2 son cero ?
+  if (numero1 == 0 && numero2 == 0) console.log("No puedo dividir 0 por 0");
+  else
+    console.log(
+      `La división de numero1 y numero2 es: ${(numero1 / numero2).toFixed(2)}`
+    );
+}
+
+// CODIGO
+let numero1 = getInteger("Introduce el primer numero");
+let numero2 = getInteger("Introduce el segundo numero");
+showMessage(numero1, numero2);

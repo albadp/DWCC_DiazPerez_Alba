@@ -14,31 +14,43 @@
  *
  ***************************************************************************************************************/
 
-function pedirNum(message){
-    let nVar = parseInt(prompt(message))
-    while (isNaN(nVar)){
-        alert("Tienes que introducir un número")
-        nVar = parseInt(prompt(message))
+function getDato(message, type, min = -Infinity, max = Infinity) {
+  let end = false;
+  let dato;
+
+  do {
+    dato = prompt(message);
+    switch (type) {
+      case "int":
+        dato =
+          isNaN(dato) ||
+          parseInt(dato) !== parseFloat(dato) ||
+          dato < min ||
+          dato > max
+            ? NaN
+            : parseInt(dato);
+        end = isNaN(dato) ? false : true;
+        break;
+      case "float":
+        dato = isNaN(dato) || dato < min || dato > max ? NaN : parseFloat(dato);
+        end = isNaN(dato) ? false : true;
+        break;
+      case "string":
+        end = true;
+        break;
     }
-    return nVar
+    if (!end) {
+      alert("Tipo de dato incorrecto o no está entre los límites");
+    }
+  } while (!end);
+  return dato;
 }
 
-function asignarValor(message1, message2){
-    let nCaramelos = pedirNum(message1)
-    let nPeques = pedirNum(message2)
-    return { nCaramelos, nPeques }
-}
+let nCaramelos = getDato("Introduce el numero de caramelos", "int", 1);
+let nPeques = getDato("Introduce el numero de niños", "int", 1);
 
-function calculoDiv(caramelos, peques){
-    return caramelos/peques
-}
+let caramelosPorInfantes = parseInt(nCaramelos / nPeques);
+let caramelosSobran = nCaramelos % nPeques;
 
-function calculoMod(caramelos, peques){
-    return caramelos%peques
-}
-
-let { nCaramelos, nPeques } = asignarValor("Introduce el número de caramelos: ", "Introduce el número de niños: ")
-
-console.log(`El número de caramelos por niño es: ${calculoDiv(nCaramelos, nPeques)}`)
-console.log(`El número de caramelos que sobran es: ${calculoMod(nCaramelos,nPeques)}`)
-
+console.log(`El número de caramelos por niño es: ${caramelosPorInfantes}`);
+console.log(`El número de caramelos que sobran es: ${caramelosSobran}`);

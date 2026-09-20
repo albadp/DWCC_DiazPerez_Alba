@@ -17,43 +17,76 @@
  *
  ***************************************************************************************************************/
 
-function pedirEdad(message){
-    let edad = parseInt(prompt(message))
-    while ((isNaN(edad)) || (edad < 0 || edad > 120)){
-        alert("Tienes que introducir un número entre 0 y 120")
-        edad = parseInt(prompt(message))
+// Como hemos realizado varios ejercicios solicitando enteros y flotantes y con limitaciones
+// como mayor que 0, entre 1 y 120, etc, debemos pensar en una función genérica que nos permita
+// pedir enteros, flotantes, cadenas y, dentro de lo posible, en un rango de datos
+// De esta forma nos ahorramos trabajo
+
+function getDato(message, type, min = -Infinity, max = Infinity) {
+  let end = false;
+  let dato;
+
+  do {
+    dato = prompt(message);
+    switch (type) {
+      case "int":
+        dato =
+          isNaN(dato) ||
+          parseInt(dato) !== parseFloat(dato) ||
+          dato < min ||
+          dato > max
+            ? NaN
+            : parseInt(dato);
+        end = isNaN(dato) ? false : true;
+        break;
+      case "float":
+        dato = isNaN(dato) || dato < min || dato > max ? NaN : parseFloat(dato);
+        end = isNaN(dato) ? false : true;
+        break;
+      case "string":
+        end = true;
+        break;
     }
-    return edad
-}
-
-function mensajeIf(edad){
-    if(edad < 30){
-        console.log("! Ponte a trabajar !")
-    } else if ((edad > 30) && (edad < 65)){
-        console.log("! Que ganas tengo de jubilarme !")
-    } else {
-        console.log("! Descansa un poco !")
-    } 
-}
-
-function mensajeSwitch(edad){
-    switch(true){
-        case (edad >= 0) && (edad < 30):
-            console.log("! Ponte a trabajar !")
-            break
-        case (edad > 30) && (edad < 65):
-            console.log("! Que ganas tengo de jubilarme !")
-            break
-        default:
-            console.log("! Descansa un poco !")
-            break
+    if (!end) {
+      alert("Tipo de dato incorrecto o no está entre los límites");
     }
+  } while (!end);
+  return dato;
 }
 
-let edad = pedirEdad("Introduce tu edad:")
+// Separar lógica de presentación
+// Version if
+function getMessageIf(edad) {
+  let message = "";
+  if (edad < 30) {
+    message = "¡Ponte a trabajar!";
+  } else if (edad >= 30 && edad <= 64) {
+    message = "¡Que ganas tengo de jubilarme!";
+  } else {
+    message = "¡Descansa un poco!";
+  }
+  return message;
+}
 
-console.log(mensajeSwitch(edad))
+// Separar lógica de presentación
+// Version switch
+function getMessageSwitch(edad) {
+  let message = "";
 
+  switch (true) {
+    case edad < 30:
+      message = "¡Ponte a trabajar!";
+      break;
+    case edad >= 30 && edad <= 64:
+      message = "¡Que ganas tengo de jubilarme!";
+      break;
+    case edad >= 65:
+      message = "¡Descansa un poco!";
+      break;
+  }
+  return message;
+}
 
-
-
+let edad = getDato("Introduce tu edad:", "int", 1, 120);
+alert(getMessageIf(edad));
+alert(getMessageSwitch(edad));

@@ -19,16 +19,20 @@
  *
  ***************************************************************************************************************/
 
-function pedirFloatante(message){
-    let fahrenheit = parseFloat(prompt(message))
-    while (isNaN(fahrenheit)){
-        alert("Tienes que introducir un numero")
-        fahrenheit = parseFloat(prompt(message))
-    }
-    return fahrenheit
+// Obtenemos un número entero o flotante
+function getNumber(message) {
+  let dato = prompt(message);
+  while (isNaN(dato)) {
+    alert("Error: Debes introducir un número !");
+    dato = prompt(message);
+  }
+  return parseFloat(dato);
 }
 
-const toCelsius=fahrenheit=>(5/9 + (fahrenheit-32)).toFixed(2)
+let fahrenheit = getNumber("Introduce la temperatura en Farenheit:");
 
-let fahrenheit=pedirFloatante("Introduce los grados Fahrenheit:")
-console.log(toCelsius(fahrenheit))
+//Podemos realizar el cálculo directamente y almacenarlo en una variable:
+// let celsius = (5 / 9) * (fahrenheit - 32);
+// o emplear una función (más útil en el caso de querer llamarla desde varios puntos)
+const toCelsius = (fahrenheit) => ((5 / 9) * (fahrenheit - 32)).toFixed(2);
+alert(`La temperatura en Celsius es de ${toCelsius(fahrenheit)}`);

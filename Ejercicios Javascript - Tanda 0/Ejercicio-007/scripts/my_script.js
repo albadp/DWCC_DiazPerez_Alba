@@ -7,7 +7,7 @@
  *             Aprender a detectar y corregir errores
  *             Aprender a definir funciones y arrays (adicional)
  *             Aprender métodos de programación funcional (adicional)
- * 
+ *
  *   Tarea: Solicitaremos un número entero entre 1 y 9. Repetimos la solicitud mientras no esté entre 1 y 9.
  *          Cuando ya esté entre 1 y 9, mostraremos la tabla de multiplicar de ese número
  *
@@ -23,36 +23,52 @@
  *
  ***************************************************************************************************************/
 
-function pedirNum(message){
-    let num = parseInt(prompt(message))
-    while (isNaN(num) || (num < 1 || num > 9)){
-        alert("Tienes que introducir un número del 1 al 9:")
-        num = parseInt(prompt(message))
+function getDato(message, type, min = -Infinity, max = Infinity) {
+  let end = false;
+  let dato;
+
+  do {
+    dato = prompt(message);
+    switch (type) {
+      case "int":
+        dato =
+          isNaN(dato) ||
+          parseInt(dato) !== parseFloat(dato) ||
+          dato < min ||
+          dato > max
+            ? NaN
+            : parseInt(dato);
+        end = isNaN(dato) ? false : true;
+        break;
+      case "float":
+        dato = isNaN(dato) || dato < min || dato > max ? NaN : parseFloat(dato);
+        end = isNaN(dato) ? false : true;
+        break;
+      case "string":
+        end = true;
+        break;
     }
-    return num
+    if (!end) {
+      alert("Tipo de dato incorrecto o no está entre los límites");
+    }
+  } while (!end);
+  return dato;
 }
 
-function crearArray(num){
-    let arraySalida = []
-    let rows = 9
-    let col = 5
-    for(let i = 1; i < rows; i++){
-        arraySalida[i] = []
-        for(let ind = 1; ind < col; ind++){
-            if(ind == 1){
-                let arraySalida[i][ind] = i
-            } else if(ind == 2){
-                let arraySalida[i][ind] = "x"
-            } else if(ind == 3){
-                let arraySalida[i][ind] = num
-            }else if(ind == 4){
-                let arraySalida[i][ind] = "="
-            }else {
-                let arraySalida[i][ind] = i*num
-            }
-        }
-    }
-    return arraySalida
+function tabla(num) {
+  let tabla = "<table>";
+  for (let i = 1; i <= 10; i++) {
+    tabla += "<tr>";
+    tabla += `<td>${i}</td><td>x</td><td>${num}</td><td>=</td><td>${
+      i * num
+    }</td>`;
+    tabla += "</tr>";
+  }
+  tabla += "</table>";
+  return tabla;
 }
 
-let num = pedirNum("Introduce un número del 1 al 9:")
+let num = getDato("Introduce un numero entre 1 y 9", "int", 1, 9);
+
+const $body = document.querySelector("body");
+$body.innerHTML = tabla(num);
