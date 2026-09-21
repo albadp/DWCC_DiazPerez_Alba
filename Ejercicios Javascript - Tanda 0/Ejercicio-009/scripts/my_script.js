@@ -24,3 +24,22 @@
  *   Salida  : "Tu índice de masa corporal es <imc>. Tienes un riesgo ..... de enfermedad coronaria"
  *
  ***************************************************************************************************************/
+
+function pedirNum(message){
+    let num = parseFloat(prompt(message))
+    while (isNaN(num)){
+        alert("Tienes que introducir un número en dígito")
+        num = parseFloat(prompt(message))
+    }
+    return num
+}
+
+function calculoImc(estatura,peso){
+    
+}
+
+let estatura = pedirNum("Introduce tu altura en metros:")
+let peso = pedirNum("Introduce tu peso en kilos:")
+
+
+

@@ -19,9 +19,9 @@
  ***************************************************************************************************************/
 
 
-function pedirNum(message){
+function pedirNum(message, figura){
     let num = parseInt(prompt(message))
-    while (isNaN(num) || (num % 2 != 1)){
+    while (isNaN(num) || (figura === "triangulo" && num % 2 != 1)){
         alert("Tienes que introducir un número impar:")
         num = parseInt(prompt(message))
     }
@@ -30,7 +30,7 @@ function pedirNum(message){
 
 function pedirFigura(message){
     let figura = prompt(message)
-    while (figura !== "triangulo" || figura !== "cuadrado"){
+    while (figura !== "triangulo" && figura !== "cuadrado"){
         alert("Tienes que introducir 'triangulo' o 'cuadrado'")
         figura = prompt(message)
     }
@@ -38,18 +38,28 @@ function pedirFigura(message){
 }
 
 function hacerCuadrado(num){
-    let dibujo = "*".repeat(num)
+    let dibujo = "*".repeat(num) + "\n";
     for(let i = 0; i<num; i++){
-        dibujo += "*" + " ".repeat(num-2)+ "*"
+        dibujo += "*" + " ".repeat(num-2)+ "*" + "\n";
     }
-    dibujo += "*".repeat(num)
+    dibujo += "*".repeat(num) + "\n";
     return dibujo
 }
 
 function hacerTriangulo(num){
     let dibujo = ""
+    for(let i = 1; i <= num; i += 2){
+        let espacios = (num-i)/2
+        dibujo += `${" ".repeat(espacios)}${"*".repeat(i)}\n`;
+    }
+    return dibujo
 }
 
-let figura = pedirFigura("Intruduce la figura (triangulo/cuadrado):")
-let num = pedirNum("Introduce un número:")
+let figura = pedirFigura("Introduce la figura (triangulo/cuadrado):")
+
+let num = pedirNum("Introduce un número:", figura)
+
+let tipo = figura == "triangulo" ? hacerTriangulo(num) : hacerCuadrado(num)
+
+console.log(tipo)
 
