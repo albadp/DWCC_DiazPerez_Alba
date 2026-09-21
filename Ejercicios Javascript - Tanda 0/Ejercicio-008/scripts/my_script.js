@@ -17,3 +17,39 @@
  *                                                    ***
  *
  ***************************************************************************************************************/
+
+
+function pedirNum(message){
+    let num = parseInt(prompt(message))
+    while (isNaN(num) || (num % 2 != 1)){
+        alert("Tienes que introducir un número impar:")
+        num = parseInt(prompt(message))
+    }
+    return num
+}
+
+function pedirFigura(message){
+    let figura = prompt(message)
+    while (figura !== "triangulo" || figura !== "cuadrado"){
+        alert("Tienes que introducir 'triangulo' o 'cuadrado'")
+        figura = prompt(message)
+    }
+    return figura
+}
+
+function hacerCuadrado(num){
+    let dibujo = "*".repeat(num)
+    for(let i = 0; i<num; i++){
+        dibujo += "*" + " ".repeat(num-2)+ "*"
+    }
+    dibujo += "*".repeat(num)
+    return dibujo
+}
+
+function hacerTriangulo(num){
+    let dibujo = ""
+}
+
+let figura = pedirFigura("Intruduce la figura (triangulo/cuadrado):")
+let num = pedirNum("Introduce un número:")
+

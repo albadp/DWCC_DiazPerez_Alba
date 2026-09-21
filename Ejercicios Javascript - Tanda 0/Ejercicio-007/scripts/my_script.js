@@ -34,25 +34,15 @@ function pedirNum(message){
 
 function crearArray(num){
     let arraySalida = []
-    let rows = 9
-    let col = 5
+    const rows = 9
+    const col = 5
     for(let i = 1; i < rows; i++){
-        arraySalida[i] = []
-        for(let ind = 1; ind < col; ind++){
-            if(ind == 1){
-                let arraySalida[i][ind] = i
-            } else if(ind == 2){
-                let arraySalida[i][ind] = "x"
-            } else if(ind == 3){
-                let arraySalida[i][ind] = num
-            }else if(ind == 4){
-                let arraySalida[i][ind] = "="
-            }else {
-                let arraySalida[i][ind] = i*num
-            }
-        }
+        arraySalida[i] = `${i} x ${num} = ${i*num}`
     }
     return arraySalida
 }
 
 let num = pedirNum("Introduce un número del 1 al 9:")
+
+document.write(`<table>${crearArray(num).map(fila=>`<tr>${fila.split(" ").map(el=>`<td>${el}</td>`).join('')}</tr>`).join('')}<table>`)
+

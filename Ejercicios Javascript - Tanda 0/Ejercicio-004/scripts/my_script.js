@@ -27,27 +27,31 @@ function pedirEdad(message){
 }
 
 function mensajeIf(edad){
+    let message=""
     if(edad < 30){
-        console.log("! Ponte a trabajar !")
+        message="! Ponte a trabajar !"
     } else if ((edad > 30) && (edad < 65)){
-        console.log("! Que ganas tengo de jubilarme !")
+        message="! Que ganas tengo de jubilarme !"
     } else {
-        console.log("! Descansa un poco !")
+        message="! Descansa un poco !"
     } 
+    console.log(message)
 }
 
 function mensajeSwitch(edad){
+    let message=""
     switch(true){
         case (edad >= 0) && (edad < 30):
-            console.log("! Ponte a trabajar !")
+            message="! Ponte a trabajar !"
             break
         case (edad > 30) && (edad < 65):
-            console.log("! Que ganas tengo de jubilarme !")
+            message="! Que ganas tengo de jubilarme !"
             break
         default:
-            console.log("! Descansa un poco !")
+            message="! Descansa un poco !"
             break
     }
+    return message
 }
 
 let edad = pedirEdad("Introduce tu edad:")
