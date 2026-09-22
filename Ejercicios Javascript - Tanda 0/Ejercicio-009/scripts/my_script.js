@@ -35,11 +35,30 @@ function pedirNum(message){
 }
 
 function calculoImc(estatura,peso){
-    
+    let imc = (estatura/(peso*peso)).toFixed(2)
+    return imc
+}
+
+function generarTexto(edad,imc){
+    let texto = `Tu índice de masa corporal es ${imc}. Tienes un riesgo `
+    if (edad<45 && imc <=22){
+        texto += "bajo"
+    } else if (edad >= 45 && imc >= 22){
+        texto += "alto"
+    } else {
+        texto += "medio"
+    }
+    texto += " de enfermedad coranaria"
+    return texto
 }
 
 let estatura = pedirNum("Introduce tu altura en metros:")
 let peso = pedirNum("Introduce tu peso en kilos:")
+let edad = pedirNum("Introduce tu edad:")
+
+let imc = calculoImc(estatura, peso)
+
+console.log(generarTexto(edad,imc))
 
 
 
