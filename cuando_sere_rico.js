@@ -25,7 +25,7 @@
  */
 function pedirNum(message){
     let num = parseInt(prompt(message))
-    while (isNaN(num) || (num >=1 && num < 1000000000)){
+    while (isNaN(num) || (num < 1 || num > 1000000000)){
         alert("Tienes que introducir un número en dígito")
         num = parseInt(prompt(message))
     }
@@ -50,7 +50,7 @@ function calcularDinero(cent){
     return dias
 }
 
-const getDinero(dias){
+function getDinero(dias){
     if (dias==1||dias==2)
         return dias 
     return getDinero(dias-1)+2*getDinero(dias-2)
@@ -58,10 +58,14 @@ const getDinero(dias){
 
 let cent = pedirNum("Cuántos son los céntimos que tiene que conseguir Jaime?")
 
-let dias=0
-while (getDinero(dias)<cent)
-    dias++
-console.log(dias)
+/**
+ * Da error 
+ */
+// let dias=0
+// while (getDinero(dias)<cent)
+//     dias++
+
+console.log(calcularDinero(cent))
 
 
 
