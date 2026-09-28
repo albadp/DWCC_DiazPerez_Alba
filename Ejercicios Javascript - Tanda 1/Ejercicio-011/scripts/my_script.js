@@ -16,9 +16,10 @@ function pedirNum(message){
     let num
     do {
         num = parseInt(prompt(message))
-        returnNums = variosNum.push(num)
+        variosNum.push(num)
     } while (num != 0)
-    return returnNums
+    variosNum.pop()
+    return variosNum
 }
 
 function grande(numLeidos){
@@ -40,5 +41,4 @@ function suma(numLeidos){
 }
 
 let numLeidos = pedirNum("Introduce un número (para parar 0):")
-
 console.log(`El mayor es ${grande(numLeidos)}. La suma es ${suma(numLeidos)}.`)
