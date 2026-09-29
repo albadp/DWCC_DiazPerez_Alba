@@ -28,6 +28,19 @@ const $d=document,
     $addInput=$d.querySelector("#libro-add>input"),
     $addBtn=$d.querySelector("#libro-add>button")
 
+$addBtn.addEventListener("click",ev=>{
+    ev.preventDefault()
+    let title = $addInput.value
+    if(title!=""){
+    let id=Math.max(...books.map(book=>book.id))+1
+    const book = {id,title}
+    books.push(book)
+    renderBooks1(books)
+    $addInput.value=""
+    $search.value=""
+    }
+})
+
 $ul.addEventListener("click",ev=>{
     let id=ev.target.dataset.id
     if(id){
@@ -48,10 +61,6 @@ $search.addEventListener("keyup",ev=>{
 $hide.addEventListener("click",ev=>{
     $ul.style.display=$ul.style.display=="block"?"none":"block"
 })
-
-
-
-
 
 function renderBooks1(books){
     //console.log(books)
@@ -91,25 +100,27 @@ function renderBooks3(books){
     },"")
 }
 
+function renderBooks4(books){
+    const $tItem=$d.querySelector("#tItem").content
+
+    books.forEach(book=>{
+        const $clon=$tItem.cloneNode(true)
+        $clon.querySelector("span").textContent=book.title
+        $clon.querySelector(".borrar").setAttribute("data-id",book.id)
+        $ul.appendChild($clon)
+    })
+}
+
 $d.addEventListener("DOMContentLoaded",ev=>{
     $ul.style.display="block"
     renderBooks3(books)
 })
 
 
-
-
-
-
-
-
-
-
-
-// <li>
-// <span class="titulo">Eloquent JavaScript</span>
-// <span class="borrar">-</span>
-// </li>
+/* <li>
+<span class="titulo">Eloquent JavaScript</span>
+<span class="borrar">-</span>
+</li> */
 // <li>
 // <span class="titulo">Scope & Closures</span>
 // <span class="borrar">-</span>
