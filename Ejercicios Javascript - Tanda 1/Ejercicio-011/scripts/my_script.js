@@ -33,7 +33,7 @@ function grande(numLeidos){
 }
 
 function suma(numLeidos){
-    let total 
+    let total = 0
     for (let i = 0; i < numLeidos.length; i++){
         total += numLeidos[i]
     }
