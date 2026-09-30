@@ -38,7 +38,9 @@ const productos=[
 ]
 
 const $d=document,
-    $productos=$d.querySelector("#lista-productos")
+    $productos=$d.querySelector("#lista-productos"),
+    $carritoBody=$d.querySelector("#body-carrito"),
+    $carritoFooter=$d.querySelector("#footer-carrito")
 
 const carrito=[]
 // {
@@ -47,7 +49,76 @@ const carrito=[]
 //     cantidad:
 // }
 
+$carritoBody.addEventListener("click",ev=>{
+    ev.preventDefault()
+    let id=ev.target.dataset.productoCarritoId
+    if(id){
+        let productoCarrito= carrito.find(el=>el.id==id)
+        // console.log(ev.target.textContent)
+        // console.log(ev.target.classList.contains("btn-info"))
+        if(ev.target.classList.contains("btn-info")){
+            productoCarrito.cantidad++
+        } else{
+            productoCarrito.cantidad--
+            if(!productoCarrito.cantidad){
+                let index=carrito.findIndex(el=>el.id==id)
+                carrito.splice(index,1)
+            }
+        }
+        renderCarrito(carrito)
+    }
+})
+
+function renderFooter(lleno,cantidad,precio){
+    if(lleno){
+        $carritoFooter.innerHTML=`
+        <th scope="row" colspan="2">Total productos</th>
+            <td>${cantidad}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" id="vaciar-carrito">
+                    Vaciar Carrito
+                </button>
+            </td>
+            <td class="font-weight-bold"><span>${precio}</span>&euro;</td>`
+            $carritoFooter.querySelector("button").addEventListener("click",ev=>{
+                ev.preventDefault()
+                carrito.splice(0,carrito.length)
+                renderCarrito(carrito)
+            })
+    } else {
+        $carritoFooter.innerHTML=`
+                    <tr id="footer-carrito">
+                        <th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>
+                    </tr>`
+    }
+}
+
+function renderCarrito(carrito){
+    // console.log(carrito)
+    let totalProductos=0
+    let totalPrecio=0
+    $carritoBody.innerHTML=carrito.reduce((anterior,actual,i)=>{
+        const producto = productos.find(el=>el.id==actual.productoId)
+        totalProductos+=actual.cantidad
+        totalPrecio+= producto.precio*actual.cantidad
+        return anterior+`
+        <tr>
+                <td>${i+1}</td>
+                <td>${producto.title}</td>
+                <td>${actual.cantidad}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" data-producto-carrito-id="${actual.id}"> + </button>
+                    <button class="btn btn-danger btn-sm"data-producto-carrito-id="${actual.id}"> - </button>
+                </td>
+                <td>${producto.precio*actual.cantidad}</td>
+            </tr>
+            `},"")
+
+    renderFooter(carrito.length,totalProductos,totalPrecio)
+}
+
 $productos.addEventListener("click",ev=>{
+    ev.preventDefault()
     //let id = ev.target.getAttribute("data-producto-id")
     let id=ev.target.dataset.productoId
     if(id){
@@ -64,7 +135,8 @@ $productos.addEventListener("click",ev=>{
             }
         carrito.push(productoCarrito)
         }
-        console.log(carrito)
+        // console.log(carrito)
+        renderCarrito(carrito)
     }
 })
 
@@ -83,6 +155,22 @@ function renderProductos1(productos){
         </div>`}).join("")
 }
 
+function renderProductos2(productos){
+    const $tProducto=$d.querySelector("#template-producto").content
+
+    productos.forEach(producto=>{
+        const $clon=$tProducto.cloneNode(true)
+        const $img=$clon.querySelector("img")
+        $img.src=producto.thumbnailUrl
+        const $h5=$clon.querySelector("h5")
+        $h5.textContent=producto.title
+        const $a=$clon.querySelector("a")
+        $a.dataset.productoId=producto.id
+        // $a.setAttribute("data-producto-id",producto.id)
+        $productos.appendChild($clon)
+    })
+}
+
 $d.addEventListener("DOMContentLoaded",ev=>{
-    renderProductos1(productos)
+    renderProductos2(productos)
 })
