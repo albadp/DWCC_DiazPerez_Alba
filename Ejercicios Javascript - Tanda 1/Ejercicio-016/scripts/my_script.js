@@ -1,0 +1,91 @@
+/***************************************************************************************************************
+ *
+ *   Objetivo: Aprender a emplear métodos de programación funcional sobre objetos
+ *             Aprender a crear una función expresada
+ *             Aprender a crear una función anónima
+ *             Programar para no repetir
+ *
+ *   Tarea: Tienes un array de objetos que representan ordenes de compra con los siguientes atributos:
+ *    {
+ *      cliente: String
+ *      total: Number
+ *      entregado: Boolean
+ *     }
+ *
+ *   Tienes que crear una función o funciones para filtrar todas las órdenes de compra entregadas que tengan un total mayor o igual a 100
+ *
+ *   Entrada : array de objetos de la forma indicada
+ *
+ *   Ejemplo:
+ *
+ *   [
+ *       {
+ *          cliente: "Nicolas",
+ *          total: 100,
+ *          entregado: true,
+ *       },
+ *       {
+ *         cliente: "Zulema",
+ *         total: 120,
+ *         entregado: false,
+ *      },
+ *      {
+ *        cliente: "Santiago",
+ *        total: 300,
+ *        entregado: true,
+ *      }
+ *    ]
+ *
+ *   Salida  : array de objetos que cumplen los filtros
+ *
+ *   [
+ *      {
+ *         cliente: "Nicolas",
+ *         total: 100,
+ *         entregado: true,
+ *      },
+ *      {
+ *         cliente: "Santiago",
+ *         total: 300,
+ *         entregado: true,
+ *       }
+ *   ]
+ *
+ *
+ ***************************************************************************************************************/
+
+//const filterFieldEqual=(clients, field, value)=>clients.filter((el) => el[field] == value);
+function filterFieldEqual(clients, field, value) {
+  return clients.filter((el) => el[field] == value);
+}
+
+//const filterFieldGreater=(clients, field, value)=>clientes.filter((el) => el.total > value);
+function filterFieldGreater(clients, field, value) {
+  return clients.filter((el) => el[field] >= value);
+}
+
+const clientes = [
+  {
+    cliente: "Nicolas",
+    total: 100,
+    entregado: true,
+  },
+  {
+    cliente: "Zulema",
+    total: 120,
+    entregado: false,
+  },
+  {
+    cliente: "Santiago",
+    total: 300,
+    entregado: true,
+  },
+];
+
+console.log(
+  filterFieldGreater(
+    filterFieldEqual(clientes, "entregado", true),
+    "total",
+    100,
+  ),
+);
