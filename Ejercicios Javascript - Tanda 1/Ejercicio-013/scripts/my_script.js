@@ -18,3 +18,21 @@
  ***************************************************************************************************************/
 
 
+const LETRAS = "abcdefghijklmnopqrstuvexyz"
+
+function pedirPalabra(message){
+    let palabra = prompt(message)
+    let palabraArray=palabra.toLowerCase().split("")
+    while(!palabraArray.every(letra => LETRAS.includes(letra))){
+        alert("tienes que introducir una palabra válida!")
+        let palabra = prompt(message)
+        palabraArray=palabra.toLowerCase().split("")
+    }
+    return palabraArray
+}
+
+function puntuarPalabra(palabraArray){
+
+}
+
+let palabraArray = pedirPalabra("Introduce una palabra (hasta llegar a 100 puntos):")
