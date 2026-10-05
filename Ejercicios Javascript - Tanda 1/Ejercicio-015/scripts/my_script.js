@@ -14,3 +14,56 @@
  *   Salida  : 2, 4, 6, ..., n  (incluidas las coma y el espacio detras de cada número excepto el último)
  *
  ***************************************************************************************************************/
+
+function pedirNum(message){
+    let num = parseInt(prompt(message))
+    while (isNaN(num) || (num < 2)){
+        alert("Tienes que introducir un número par positivo en dígito")
+        num = parseInt(prompt(message))
+    }
+    return num
+}
+
+function pares1(num){
+    let stringPares = ""
+    for(let i = 2; i<=num; i+=2){
+        stringPares += `${i}, `
+    }
+    returnPares = stringPares.slice(0,-2)
+    return returnPares
+}
+
+function pares2(num){
+    let stringPares = ""
+    let pares = 2
+    do {
+        stringPares += `${pares}, `
+        pares += 2
+    } while (pares <= num)
+    returnPares = stringPares.slice(0,-2)
+    return returnPares
+}
+
+function pares3(num){
+    let stringPares = ""
+    let pares = 2
+    while (pares <= num){
+        stringPares += `${pares}, `
+        pares += 2
+    }
+    returnPares = stringPares.slice(0,-2)
+    return returnPares
+}
+
+function pares4(num){
+    let arrayPares = []
+    for(let i = 2; i <= num; i += 2) {
+        arrayPares.push(`${i}`)
+    }
+    let stringPares = arrayPares.join(", ")
+    return stringPares
+}
+
+let num = pedirNum("Introduce un número entero mayor o igual a 2:")
+
+console.log(pares4(num))

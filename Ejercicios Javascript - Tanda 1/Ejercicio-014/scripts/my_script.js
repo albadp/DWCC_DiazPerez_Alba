@@ -13,3 +13,33 @@
  *   Salida  : inicio², (inicio+1)², ..... (fin)²
  *
  ***************************************************************************************************************/
+
+function pedirNum(message){
+    let num = parseInt(prompt(message))
+    while (isNaN(num)){
+        alert("Tienes que introducir un número en dígito")
+        num = parseInt(prompt(message))
+    }
+    return num
+}
+
+function cuadrado(num1,num2){
+    let stringCuadrado = ""
+    if(num1<num2){
+        for(let i = num1; i<=num2; i++){
+            stringCuadrado += (`${i**2} `)
+        }
+    } else if(num1>num2){
+        for(let i = num2; i<=num1; i++){
+            stringCuadrado += (`${i**2} `)
+        }
+    } else{
+        stringCuadrado += (`${num1**2}`)
+    }
+    return stringCuadrado
+}
+
+let num1 = pedirNum("Introduce el primer número entero:")
+let num2 = pedirNum("Introduce el segundo número entero:")
+
+console.log(cuadrado(num1,num2))

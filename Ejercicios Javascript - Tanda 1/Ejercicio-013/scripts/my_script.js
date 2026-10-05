@@ -31,8 +31,11 @@ function pedirPalabra(message){
     return palabraArray
 }
 
-function puntuarPalabra(palabraArray){
+let puntos = 0 
 
-}
-
+do{
 let palabraArray = pedirPalabra("Introduce una palabra (hasta llegar a 100 puntos):")
+puntos += palabraArray.reduce((anterior, actual) => anterior + LETRAS.indexOf(actual) + 1,0,)
+console.log(`La palabra es de ${puntos} puntos`)
+
+} while(puntos<100)

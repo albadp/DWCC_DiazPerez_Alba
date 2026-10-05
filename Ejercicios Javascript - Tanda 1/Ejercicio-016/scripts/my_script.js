@@ -54,4 +54,27 @@
  *
  ***************************************************************************************************************/
 
+const objetos = [
+    {
+        cliente: "Nicolas",
+        total: 100,
+        entregado: true,
+    },
+    {
+    cliente: "Zulema",
+    total: 120,
+    entregado: false,
+    },
+    {
+    cliente: "Santiago",
+    total: 300,
+    entregado: true,
+    }
+]
+
+function filtroTotal(){
+    return objetos.findIndex(objeto=>objeto.total>=100)
+}
+
+
 
