@@ -76,5 +76,7 @@ function filtroTotal(){
     return objetos.findIndex(objeto=>objeto.total>=100)
 }
 
-
+function salida(){
+    
+}
 
