@@ -72,11 +72,10 @@ const objetos = [
     }
 ]
 
-function filtroTotal(){
-    return objetos.findIndex(objeto=>objeto.total>=100)
-}
 
-function salida(){
-    
-}
+const objetosFiltrados = objetos.filter(objeto=>objeto.total>=100)
+
+objetosFiltrados.forEach(objeto => {
+        console.log(objeto.cliente + ", " + objeto.total + ", " + objeto.entregado)
+    });
 

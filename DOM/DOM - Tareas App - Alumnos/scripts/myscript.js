@@ -4,23 +4,43 @@ $stTareas = $d.querySelector("#template-tarea"),
 $tareaInput=$d.querySelector("#input"),
 $form=$d.querySelector("form")
 
-const tareas = [
-    {
-        id:1,
-        text:"Mi primera tarea",
-        status:true
-    },
-    {
-        id:2,
-        text:"Mi segunda tarea",
-        status:true
-    }
-]
+const tareas = []
 
 function deleteTarea(id){
     let index= tareas.findIndex(tarea=>tarea.id==id)
     tareas.splice(index,1)
+    localStorage.setItem("tareas",JSON.stringify(tareas))
     renderTareas1(tareas)
+}
+
+function addTarea(tarea){
+    // console.log("añadir tarea")
+    tarea.id=tareas.length
+            ?Math.max(...tareas.map(tarea=>tarea.id))+1
+            :1
+        tareas.push(tarea)
+        localStorage.setItem("tareas",JSON.stringify(tareas))
+}
+
+function updateTarea(id,tarea){
+    // console.log(`modificar tarea ${id}`)
+    tarea.id=$form.dataset.tareaId
+    let index=tareas.findIndex(tarea=>tarea.id==id)
+    tareas.splice(index,1,tarea)
+    $form.querySelector("button").textContent="Agregar"
+    delete $form.dataset.tareaId
+    $tareas.querySelectorAll("i").forEach(el=>el.classList.remove("text-black-50"))
+    localStorage.setItem("tareas",JSON.stringify(tareas))
+}
+
+function editTarea(id){
+    // console.log(`actualizar tarea ${tareaId}`)
+    const tarea=tareas.find(tarea=>tarea.id==id)
+    $tareaInput.value=tarea.text
+    $form.dataset.tareaId=tarea.id
+    $form.querySelector("button").textContent="Modificar"
+    // $tareas.removeEventListener("click",handdleClickTareas)
+    $tareas.querySelectorAll("i").forEach(el=>el.classList.add("text-black-50"))
 }
 
 $form.addEventListener("submit",ev=>{
@@ -33,32 +53,17 @@ $form.addEventListener("submit",ev=>{
 
     if(tareaId){
         // console.log(`modificar tarea ${tareaId}`)
-        tarea.id=$form.dataset.tareaId
-        let index=tareas.findIndex(tarea=>tarea.id==tareaId)
-        tareas.splice(index,1,tarea)
-        $tareaInput.value=""
-        $form.querySelector("button").textContent="Agregar"
-        delete $form.dataset.tareaId
+        updateTarea(tareaId,tarea)
         // $tareas.addEventListener("click",handdleClickTareas)
     } else {
         // console.log("añadir tarea")
-        
-        tarea.id=tareas.length
-            ?Math.max(...tareas.map(tarea=>tarea.id))+1
-            :1
-        tareas.push(tarea)
+        addTarea(tarea)
     }
+    $tareaInput.value=""
     renderTareas1(tareas)
 })
 
-function updateTarea(id){
-    // console.log(`actualizar tarea ${tareaId}`)
-    const tarea=tareas.find(tarea=>tarea.id==tareaId)
-    $tareaInput.value=tarea.text
-    $form.dataset.tareaId=tarea.id
-    $form.querySelector("button").textContent="Modificar"
-    // $tareas.removeEventListener("click",handdleClickTareas)
-}
+
 function handdleClickTareas(ev){
     let formId=$form.dataset.tareaId
     if(!formId){
@@ -66,7 +71,7 @@ function handdleClickTareas(ev){
         if (tareaId){
             ev.target.classList.contains("fa-minus-circle")
             ? deleteTarea(tareaId)
-            :updateTarea(tareaId)
+            :editTarea(tareaId)
         }
     }
 
@@ -95,5 +100,9 @@ function renderTareas1 (tareas){
 
 
 $d.addEventListener("DOMContentLoaded",ev =>{
+    let tareasLocal=JSON.parse(localStorage.getItem("tareas"))
+    if(tareasLocal){
+        Object.assign(tareas,tareasLocal)
+    }
     renderTareas1(tareas)
 })
