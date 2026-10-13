@@ -17,6 +17,17 @@
 
 const enteros = [2, 1, 2, 3, 3, 4, 2, 4]
 
-function boomerang(...enteros){
-    let encontrar = enteros.filter()
+function boomerang(enteros){
+    let total = 0;
+    for (let i = 0; i < enteros.length - 2; i++) {
+        if (enteros[i] == enteros[i + 2] && enteros[i] != enteros[i + 1]) {
+            console.log([enteros[i], enteros[i + 1], enteros[i + 2]]);
+            total++;
+        }
+    }
+
+    console.log("Total de bumeranes:", total);
+    return total;
 }
+
+boomerang(enteros)
