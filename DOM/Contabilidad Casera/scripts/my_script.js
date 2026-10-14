@@ -5,22 +5,32 @@ const $d = document,
     
     
 
-const contabilidad = [
-    {
-        id:1,
-        tipo: "Ingreso",
-        concepto: "Nomina",
-        cantidad: 1200,
-        estado: true
-    },
-    {
-        id:2,
-        tipo: "Egreso",
-        concepto: "Luz",
-        cantidad: 40,
-        estado: false
+const contabilidad = []
+
+$form.addEventListener("submit", ev=>{
+    ev.preventDefault()
+    const operacion=$form["operacion"][0].checked,
+        concepto = $form["concepto"].value,
+        cantidad = parseFloat($form["cantidad"].value)
+    
+    const movimiento= {
+        tipo:operacion?"Ingreso":"Egreso",
+        concepto,
+        cantidad,
+        estado:true
     }
-]
+    let id = 1
+    if (contabilidad.length){
+        id=Math.max(...contabilidad.map(el=>el.id))+1
+    } 
+    movimiento.id=id
+    contabilidad.push(movimiento)
+    
+    $form["concepto"].value=""
+    $form["cantidad"].value=""
+    $form["operacion"][0].checked=true
+    renderContabilidad(contabilidad)
+})
 
 function deleteMov(id){
     // console.log(`borramos ${id}`)
@@ -32,6 +42,7 @@ function editMov(id){
     // console.log(`desactivamos ${id}`)
     let mov = contabilidad.find(el => el.id == id)
     mov.estado = !mov.estado
+    
 }
 
 $tableBody.addEventListener("click",ev=>{
@@ -75,6 +86,7 @@ function renderFooter(contabilidad) {
 
 function renderContabilidad(contabilidad) {
     // console.log(`se muestra contabilidad`)
+    sessionStorage.setItem("contabilidad",JSON.stringify(contabilidad))
     $tableBody.innerHTML = ""
     const $tTableRow = $d.querySelector("#template-fila").content
 
@@ -98,5 +110,10 @@ function renderContabilidad(contabilidad) {
 
 
 $d.addEventListener("DOMContentLoaded", ev => {
+    let cuentas = JSON.parse(sessionStorage.getItem("contabilidad"))
+    if(cuentas){
+        contabilidad.splice(0,contabilidad.length, ...cuentas)
+        // Object.assign(contabilidad,cuentas)
+    }
     renderContabilidad(contabilidad)
 })

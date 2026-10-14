@@ -15,3 +15,44 @@
  *
  *
  ***************************************************************************************************************/
+
+function pedirNum(message){
+    let num = parseInt(prompt(message))
+    while (isNaN(num) || (num < 1 || num > 100)){
+        alert("Tienes que introducir un número entre -20 y 20 en dígito")
+        num = parseInt(prompt(message))
+    }
+    return num
+}
+
+function iterativa(num){
+    let numero = num
+    while(numero != 1){
+        if (numero % 2 == 0){
+            numero /= 2
+            console.log(numero)
+        } else {
+            numero *= 3
+            numero++
+            console.log(numero)
+        }
+    }
+}
+
+function recursiva(num){
+    if(num == 1){
+        return
+    } else if (num % 2 == 0){
+        recursiva(num/2)
+        console.log(num/2)
+    } else {
+        recursiva(num * 3 + 1)
+        console.log(num * 3 + 1)
+    }
+}
+
+let num = pedirNum("Introduce un número entero: ")
+
+iterativa(num)
+console.log("________________________________________________")
+recursiva(num)
