@@ -14,12 +14,22 @@
  *
  ***************************************************************************************************************/
 
+function pedirNum(message) {
+    let num = parseInt(prompt(message))
+    while (isNaN(num)) {
+        alert("Tienes que introducir un número en dígito")
+        num = parseInt(prompt(message))
+    }
+    return num
+}
 
+function automorfico(num) {
+    let cuadrado = `${Math.pow(num,2)}`
+    return cuadrado.endsWith(`${num}`)
+}
 
+let num = pedirNum("Introduce un número entero: ")
 
-
-
-
-
+automorfico(num) ? console.log("Es automórfico") : console.log("No es automórfico")
 
 

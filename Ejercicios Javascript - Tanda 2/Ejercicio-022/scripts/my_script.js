@@ -19,7 +19,7 @@
 function pedirNum(message){
     let num = parseInt(prompt(message))
     while (isNaN(num) || (num < 1 || num > 100)){
-        alert("Tienes que introducir un número entre -20 y 20 en dígito")
+        alert("Tienes que introducir un número en dígito")
         num = parseInt(prompt(message))
     }
     return num
