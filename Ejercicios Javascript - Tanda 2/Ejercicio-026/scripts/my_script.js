@@ -23,26 +23,27 @@ const LETRAS = "abcdefghijklmnopqrstuvexyz"
 
 function pedirPalabra(message){
     let palabra = prompt(message)
-    let palabraArray=palabra.toLowerCase().split("")
+    let palabraArray = palabra.toLowerCase().split("")
     while(!palabraArray.every(letra => LETRAS.includes(letra))){
         alert("tienes que introducir una palabra válida!")
         let palabra = prompt(message)
-        palabraArray=palabra.toLowerCase().split("")
+        palabraArray = palabra.toLowerCase().split("")
     }
     return palabraArray
 }
 
-function findPalabra(mensaje, palabra){
-    const palabras=mensaje.split('')
-    const posiciones=[]
+function findPalabra(mensaje, palabra) {
+    let mensajeMin = mensaje.toLowerCase()
+    const palabras = mensajeMin.split("")
+    const posiciones = []
     
     
-
     return posiciones
 }
 
 let mensaje = pedirMensaje("Introduce una frase:")
 let palabraArray = pedirPalabra("Introduce una palabra ")
+
 
 //"La casa de mi vecino es una casa verde"
 //["La","casa"]
