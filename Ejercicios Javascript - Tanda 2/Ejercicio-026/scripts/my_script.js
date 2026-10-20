@@ -34,16 +34,20 @@ function pedirPalabra(message){
 
 function findPalabra(mensaje, palabra) {
     let mensajeMin = mensaje.toLowerCase()
-    const palabras = mensajeMin.split("")
+    let pal = palabra.toString()
+    let palabraStr = pal.replaceAll(",","")
     const posiciones = []
-    
-    
+    for (let i = 0; i < mensajeMin.length; i++){
+        if(mensajeMin.startsWith(palabraStr,i)){
+            posiciones.push(i)
+        }
+    }
     return posiciones
 }
 
 let mensaje = pedirMensaje("Introduce una frase:")
 let palabraArray = pedirPalabra("Introduce una palabra ")
 
-
-//"La casa de mi vecino es una casa verde"
-//["La","casa"]
+let msg = findPalabra(mensaje,palabraArray)!=[] ? "Las posiciones son: "+ findPalabra(mensaje,palabraArray) : "La palabra no está en el mensaje"
+//"La casa de mi vecino es una casa verde" -> 3,28
+console.log(msg)
