@@ -11,3 +11,21 @@
  *   Salida  : Mensaje tal como: "Hemos estado confinados A semanas, B días, C horas, D minutos, E segundos"
  *
  ***************************************************************************************************************/
+
+
+function pedirNum(message) {
+    let num = prompt(message)
+    while (isNaN(num) && num > 0) {
+        alert("Tienes que introducir un número positivo en dígito")
+        num = prompt(message)
+    }
+    return num
+}
+
+function getTiempo(num){
+    
+}
+
+
+
+let num = pedirNum("Introduce un número para hayar la secuencia de ceros: ")

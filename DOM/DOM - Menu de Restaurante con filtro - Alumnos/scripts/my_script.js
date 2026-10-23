@@ -74,48 +74,48 @@ const items = [
   },
 ];
 
-const $d=document,
+const $d = document,
 $items = $d.querySelector(".item-list"),
 $categorias = $d.querySelector(".btn-categorias")
   
 
 $categorias.addEventListener("click",ev=>{
-  let id=ev.target.dataset.id
+  let id = ev.target.dataset.id
 
   if (id){
-    let filteredItems=[...items]
+    let filteredItems = [...items]
     // console.log(id)
-    if(id!="todos"){
-      filteredItems=items.filter(el=>el.category==id)
+    if(id != "todos"){
+      filteredItems = items.filter(el => el.category == id)
     }
-    renderItemsReduce(filteredItems)
+  renderItemsReduce(filteredItems)
+  $categorias.querySelectorAll("button").forEach(el=>el.classList.remove("selected"))
+  ev.target.classList.add("selected")
   }
 })
 
 function renderCategorias(categorias){
-  
   const $tCategoria = $d.querySelector("#tbtn-categoria").content
   
-  categorias.forEach(categoria=>{
-    const $clon=$tCategoria.cloneNode(true)
-    const $button=$clon.querySelector("button")
-    $button.textContent=categoria
+  categorias.forEach(categoria => {
+    const $clon = $tCategoria.cloneNode(true)
+    const $button = $clon.querySelector("button")
+    $button.textContent = categoria
     // $button.setAttribute("data-id",categoria)
-    $button.dataset.id=categoria.toLowerCase()
+    $button.dataset.id = categoria.toLowerCase()
     $categorias.appendChild($clon)
   })
-
 }
 
 function getCategorias1(items){
-  const categorias=Array.from(new Set(items.map(item=>item.category)))
+  const categorias = Array.from(new Set(items.map(item => item.category)))
   categorias.unshift("todos")
-  return categorias.map(el=>el[0].toUpperCase()+el.slice(1))
+  return categorias.map(el => el[0].toUpperCase() + el.slice(1))
 }
 
 function getCategorias2(items){
-  return items.reduce((anterior,actual)=>{
-    let item=actual.category[0].toUpperCase()+actual.category.slice(1)
+  return items.reduce((anterior, actual) =>{
+    let item = actual.category[0].toUpperCase() + actual.category.slice(1)
     if(!anterior.includes(item)){
       anterior.push(item)
     } 
@@ -124,21 +124,21 @@ function getCategorias2(items){
 }
 
 function renderItemsMap(items){
-  $items.innerHTML=items.map(item=>`
-          <article class="item">
-        <img src="${item.img}" alt="${item.name}" class="item-img" />
-        <div class="item-info">
+  $items.innerHTML = items.map(item =>`
+          <article class = "item">
+        <img src = "${item.img}" alt = "${item.name}" class = "item-img" />
+        <div class = "item-info">
           <header>
             <h4>${item.name}</h4>
-            <h4 class="item-precio">${item.price}</h4>
+            <h4 class = "item-precio">${item.price}</h4>
           </header>
-          <p class="item-descripcion">${item.desc}</p>
+          <p class = "item-descripcion">${item.desc}</p>
         </div>
       </article>`).join('')
 }
 
 function renderItemsReduce(items){
-  $items.innerHTML=items.reduce((anterior,actual)=>anterior+`
+  $items.innerHTML = items.reduce((anterior,actual) => anterior+`
   <article class="item">
         <img src="${actual.img}" alt="${actual.name}" class="item-img" />
         <div class="item-info">

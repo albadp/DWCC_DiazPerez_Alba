@@ -20,19 +20,23 @@ function pedirNum(message) {
     return num
 }
 
-function posicionesCeros(num){
-    const posiciones = []
-    for (let i = 0; i < num.length; i++){
-        if(num.startsWith("0",i)){
-            posiciones.push(i)
+function secuenciaCeros(num, char){
+    if (num && num.includes(char)) {
+        let length = 1
+        let position = num.indexOf(char.repeat(length))
+        while(position != -1) {
+            length++
+            position = num.indexOf(char.repeat(length))
         }
-    }
-    return posiciones
-}
-
-function secuenciaCeros(posiciones){
+        length--
+        position = num.indexOf(char.repeat(length))
+        secuencia = char.repeat(length)
     
+    return {position, secuencia}
+    }
+    return "No se encuentra"
 }
 
 
 let num = pedirNum("Introduce un número para hayar la secuencia de ceros: ")
+console.log(secuenciaCeros(num,"0"))

@@ -153,6 +153,8 @@ p {
   background: var(--clr-black);
 }
 
+
+
 /* seccion */
 .section {
   padding: 5rem 0;
@@ -204,6 +206,12 @@ Menu
   background: var(--clr-gold);
   color: var(--clr-white);
 }
+
+.btn-categoria.selected {
+  background: var(--clr-gold);
+  color: var(--clr-white);
+}
+
 .item-list {
   width: 90vw;
   margin: 0 auto;
