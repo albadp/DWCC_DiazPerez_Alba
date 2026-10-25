@@ -16,3 +16,33 @@
  *   Salida  : El NIF NNNNNNNN-L es (falso|auténtico)
  *
  ***************************************************************************************************************/
+
+
+function pedirNIF(message) {
+    let nif = prompt(message)
+    while ((nif.length != 10) || (nif.charAt(8) != "-") || (isNaN(nif.substring(0, 8))) || (!isNaN(nif.charAt(9)))) {
+        alert("Introduce un NIF válido con el formato NNNNNNNN-L")
+        nif = prompt(message)
+    }
+    return nif
+}
+
+function getNIF(nif) {
+    const letras = "TRWAGMYFPDXBNJZSQVHLCKE"
+    let dni = Number(nif.substring(0, 8))
+    let letraIntroducida = nif.charAt(9).toUpperCase()
+    let resto = dni % 23
+    let letraCorrecta = letras.charAt(resto)
+
+    if (letraIntroducida === letraCorrecta) {
+        return `El NIF ${nif} es auténtico`
+    } else {
+        return `El NIF ${nif} es falso`
+    }
+}
+
+
+
+
+let nif = pedirNIF("Introduce el NIF (NNNNNNNN-L):")
+console.log(getNIF(nif))

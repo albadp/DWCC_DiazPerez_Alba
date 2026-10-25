@@ -23,9 +23,25 @@ function pedirNum(message) {
 }
 
 function getTiempo(num){
-    
+    const SEGUNDOS_SEMANA = 7 * 24 * 60 * 60
+    const SEGUNDOS_DIA = 24 * 60 * 60
+    const SEGUNDOS_HORA = 60 * 60
+    const SEGUNDOS_MINUTO = 60
+
+    let semanas = Math.floor(num / SEGUNDOS_SEMANA)
+    num = num % SEGUNDOS_SEMANA
+    let dias = Math.floor(num / SEGUNDOS_DIA)
+    num = num % SEGUNDOS_DIA
+    let horas = Math.floor(num / SEGUNDOS_HORA)
+    num = num % SEGUNDOS_HORA
+    let minutos = Math.floor(num / SEGUNDOS_MINUTO)
+    let segundos = num % SEGUNDOS_MINUTO
+
+    return `Hemos estado confinados ${semanas} semanas, ${dias} días, ${horas} horas, ${minutos} minutos, ${segundos} segundos`
 }
 
 
 
-let num = pedirNum("Introduce un número para hayar la secuencia de ceros: ")
+let num = pedirNum("Introduce la cantidad de segundos: ")
+
+console.log(getTiempo(num))
