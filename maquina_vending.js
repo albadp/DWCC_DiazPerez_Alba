@@ -27,21 +27,27 @@
  * 
  * La máquina devuelve: 2 monedas de 2 euros, 1 moneda de 50 céntimos, 1 moneda de 20 céntimos, 1 moneda de 5 céntimos
  * 
+ * POR VER COMO SOLUCIONAR ESTA VERSIÓN
+ * 
  */
 
 function pedirNum(message,minimo){
     let num = parseFloat(prompt(message))
-    while(isNaN(num) && (num < minimo)){
-        alert= "Tienes que introducir una cantidad válida (decimales con .)"
-        num = parseFloat(prompt(message))
-    }
     num.toFixed(2)
-    return num * 100
+    num *=100
+    while(isNaN(num) || (num < minimo)){
+        alert("Tienes que introducir una cantidad válida (decimales con .)")
+        num = parseFloat(prompt(message))
+        num.toFixed(2)
+        num *=100
+    }
+    
+    return num
 }
 
 const monedas = [200,100,50,20,10,5,2,1]
 
-function monedas(vuelta, moneda){
+function getMonedas(vuelta, moneda){
     let cantidad = 0
     while((vuelta - moneda) >= moneda){
         vuelta -= moneda
@@ -51,11 +57,25 @@ function monedas(vuelta, moneda){
 }
 
 
-let gastoProducto = pedirNum("Introduce la cantidad del precio del producto: (en euros)",0)
-let introducido = pedirNum("Introduce la cantidad del dinero a gastar en la máquina: (en euros)",gastoProducto)
+let gastoProducto = pedirNum("Introduce el precio del producto: (en euros)",0)
+let introducido = pedirNum("Introduce el dinero a gastar en la máquina: (en euros)",gastoProducto)
+
 let vuelta = introducido - gastoProducto
-let dosEuros = monedas(vuelta, 200)
-let unEuro = monedas(dosEuros.vuelta, 100)
-let cincuenta = monedas(unEuro.vuelta, 50)
-let veinte = monedas(cincuenta.vuelta, 20)
-let diez = monedas(veinte.vuelta, 10)
+
+let dosEuros = getMonedas(vuelta, 200)
+let unEuro = getMonedas(dosEuros.vuelta, 100)
+let cincuenta = getMonedas(unEuro.vuelta, 50)
+let veinte = getMonedas(cincuenta.vuelta, 20)
+let diez = getMonedas(veinte.vuelta, 10)
+let cinco = getMonedas(diez.vuelta,5)
+let dos = getMonedas(cinco.vuelta,2)
+let uno = getMonedas(dos.vuelta,1)
+
+if (vuelta == 0){
+    console.log("No se devuelve nada porque has pagado el precio exacto")
+} else{
+    console.log(`La máquina devuelve: ${dosEuros.cantidad} monedas de 2 euros, ${unEuro.cantidad} monedas de 1 euro, 
+        ${cincuenta.cantidad} monedas de 50 céntimos, ${veinte.cantidad} monedas de 20 céntimos, ${diez.cantidad} monedas de 10 céntimos,
+        ${cinco.cantidad} monedas de 5 céntimos,${dos.cantidad} monedas de 2 céntimos, ${uno.cantidad} monedas de 1 céntimos`)
+}
+    
