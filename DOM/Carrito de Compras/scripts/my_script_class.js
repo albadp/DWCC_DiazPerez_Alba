@@ -17,8 +17,8 @@ class UI{
         this.footerCarrito = document.querySelector("#footer-carrito")
 
         this.showProducts()
-        //this.showCart()
-        //this.addEvents()
+        this.showCesta()
+        this.addEvents()
     }
 
     showProducts(){
@@ -27,23 +27,135 @@ class UI{
                 <div class="card">
                     <img src="${actual.imagen}" class="card-img-top" alt="item-producto">
                     <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <p class="card-text"></p>
-                        <a href="#" class="btn btn-dark">Comprar</a>
+                        <h5 class="card-title">${actual.nombre}</h5>
+                        <p class="card-text">${actual.precio}</p>
+                        <a href="#" class="btn btn-dark" data-id="${actual.id}">Comprar</a>
                     </div>
                 </div>
             </div>
         `,'')
     }
 
+    showCesta(){
+        if(this.cesta.lineas.length==0){
+            this.footerCarrito.innerHTML=`<th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>`
+        } else{
+            this.bodyCarrito.innerHTML=this.cesta.lineas.reduce((anterior,linea,i)=>anterior+`
+            <tr>
+                <td>${i+1}</td>
+                <td>${linea.producto.nombre}</td>
+                <td>${linea.cantidad}</td>
+                <td>
+                    <button class="btn btn-info btn-sm">
+                        +
+                    </button>
+                    <button class="btn btn-danger btn-sm">
+                        -
+                    </button>
+                </td>
+                <td>${linea.total()}</td>
+            </tr>
+            `,'')
+            //this.showFooter()
+        }
+    }
+
+    showFooter(){
+
+    }
+
+    addEvents(){
+        this.listaProductos.addEventListener("click", ev=>{
+            ev.preventDefault()
+            // console.log(ev.target.dataset.id)
+            let id=ev.target.dataset.id
+            if(id){
+                const producto=this.productos.find(p=>p.id==id)
+                if(producto){
+                    this.cesta.addProducto(producto)
+                    this.showCesta()
+                }
+            }
+        })
+        this.bodyCarrito.addEventListener("click", ev=>{
+            ev.preventDefault()
+        })
+        this.footerCarrito.addEventListener("click", ev=>{
+            ev.preventDefault()
+        })
+    }
+
 }
 
-class Carrito{
-    constructor(id, productoId, cantidad){
-        this.id = id
-        this.productoId = productoId
-        this.cantidad = cantidad
+class LineaProductos{
+    constructor(producto,cantidad=1){
+        this.producto=producto
+        this.cantidad=cantidad
     }
+
+    inc(){
+        this.cantidad++
+    }
+
+    dec(){
+        this.cantidad--
+    }
+
+    total(){
+        return this.producto.precio*this.cantidad
+    }
+}
+
+class Cesta{
+    constructor(){
+        this.lineas = []
+    }
+
+    addProducto(producto){
+        let linea=this.lineas.find(l=>l.producto.id==producto.id)
+        if(linea){
+            linea.inc()
+        } else{
+            this.lineas.push(new LineaProductos(producto))
+        }
+    }
+
+
+    delProducto(id){
+        this.lineas=this.lineas.filter(l=>l.producto.id != id)
+    }
+
+    inc(id){
+        let linea=this.lineas.find(l=>l.producto.id==producto.id)
+        if(linea){
+            linea.inc()
+        }
+    }
+
+    dec(id){
+        let linea=this.lineas.find(l=>l.producto.id==producto.id)
+        if(linea){
+            linea.dec()
+        }
+        if(!linea.cantidad){
+            let lineaIndex=this.lineas.findIndex(l=>l.producto.id==producto.id)
+            this.lineas.splice(lineaIndex,1)
+        }
+    }
+
+    vaciar(){
+        this.lineas=[]
+    }
+
+    totalPrecioProductos(){
+        return this.lineas.reduce((anterior,linea)=>anterior+linea.total(),0)
+    }
+
+    totalCantidadProductos(){
+        return this.lineas.reduce((anterior,linea)=>anterior+linea.cantidad,0)
+    }
+
+
 }
 
 const productos=[
@@ -54,4 +166,11 @@ const productos=[
     new Producto(5, "Mango", 10, "https://picsum.photos/id/40/600"),
     new Producto(6, "Chela", 150, "https://picsum.photos/id/50/600")
 ]
+
+const cesta = new Cesta()
+
+
+const Interfaz = new UI(productos,cesta)
+
+
 
