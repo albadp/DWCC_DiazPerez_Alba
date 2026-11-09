@@ -38,6 +38,7 @@ class UI{
 
     showCesta(){
         if(this.cesta.lineas.length==0){
+            this.bodyCarrito.innerHTML=``
             this.footerCarrito.innerHTML=`<th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>`
         } else{
             this.bodyCarrito.innerHTML=this.cesta.lineas.reduce((anterior,linea,i)=>anterior+`
@@ -46,43 +47,74 @@ class UI{
                 <td>${linea.producto.nombre}</td>
                 <td>${linea.cantidad}</td>
                 <td>
-                    <button class="btn btn-info btn-sm">
+                    <button class="btn btn-info btn-sm" data-id="${linea.producto.id}" data-accion="inc">
                         +
                     </button>
-                    <button class="btn btn-danger btn-sm">
+                    <button class="btn btn-danger btn-sm" data-id="${linea.producto.id}" data-accion="dec">
                         -
                     </button>
                 </td>
                 <td>${linea.total()}</td>
             </tr>
             `,'')
-            //this.showFooter()
         }
+        this.showFooter()
     }
 
     showFooter(){
-
+        if(this.cesta.totalCantidadProductos() == 0){
+            this.footerCarrito.innerHTML=`<th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>`
+        } else{
+            this.footerCarrito.innerHTML=`
+            <th scope="row" colspan="2">Total productos</th>
+            <td>${this.cesta.totalCantidadProductos()}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" id="vaciar-carrito">
+                    Vaciar Carrito
+                </button>
+            </td>
+            <td class="font-weight-bold"><span>${this.cesta.totalPrecioProductos()}</span>&euro;</td>
+            `
+        }
     }
 
     addEvents(){
-        this.listaProductos.addEventListener("click", ev=>{
-            ev.preventDefault()
-            // console.log(ev.target.dataset.id)
-            let id=ev.target.dataset.id
-            if(id){
-                const producto=this.productos.find(p=>p.id==id)
-                if(producto){
-                    this.cesta.addProducto(producto)
-                    this.showCesta()
-                }
+
+    this.listaProductos.addEventListener("click", ev=>{
+        ev.preventDefault()
+        // console.log(ev.target.dataset.id)
+        let id=ev.target.dataset.id
+        if(id){
+            const producto=this.productos.find(p=>p.id==id)
+            if(producto){
+                this.cesta.addProducto(producto)
+                this.showCesta()
             }
-        })
-        this.bodyCarrito.addEventListener("click", ev=>{
-            ev.preventDefault()
-        })
-        this.footerCarrito.addEventListener("click", ev=>{
-            ev.preventDefault()
-        })
+        }
+    })
+
+    this.bodyCarrito.addEventListener("click", ev=>{
+        ev.preventDefault()
+        // console.log(ev.target.dataset.id)
+        let id=ev.target.dataset.id
+        if(id){
+            let accion = ev.target.dataset.accion
+            if(accion=="dec"){
+                this.cesta.dec(id)
+            }else{
+                this.cesta.inc(id)
+            }
+            this.showCesta()
+        }
+    })
+
+    this.footerCarrito.addEventListener("click", ev=>{
+        ev.preventDefault()
+        if(ev.target.id=="vaciar-carrito"){
+            this.cesta.vaciar()
+            this.showCesta()
+        }
+    })
     }
 
 }
@@ -126,19 +158,19 @@ class Cesta{
     }
 
     inc(id){
-        let linea=this.lineas.find(l=>l.producto.id==producto.id)
+        let linea=this.lineas.find(l=>l.producto.id==id)
         if(linea){
             linea.inc()
         }
     }
 
     dec(id){
-        let linea=this.lineas.find(l=>l.producto.id==producto.id)
+        let linea=this.lineas.find(l=>l.producto.id==id)
         if(linea){
             linea.dec()
         }
-        if(!linea.cantidad){
-            let lineaIndex=this.lineas.findIndex(l=>l.producto.id==producto.id)
+        if(linea.cantidad==0){
+            let lineaIndex=this.lineas.findIndex(l=>l.producto.id==id)
             this.lineas.splice(lineaIndex,1)
         }
     }

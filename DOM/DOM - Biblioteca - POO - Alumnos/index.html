@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de biblioteca</title>
+    <script src="scripts/my_script.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Gestión de biblioteca</h1>
+        <h2>Libros disponibles</h2>
+        <div id="lista-libros"><!--  Lista de libros: tBook  --></div>
+        <hr>
+        <h2>Ejemplares de la biblioteca</h2>
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Total ejemplares</th>
+                    <th>Disponibles</th>
+                    <th>Prestados</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-libros"> <!-- table row: tTable-row --> </tbody>
+        </table>
+        <h3 id="resumen"><!--  Resumen: tSumary  --></h3>
+    </div>
+
+    <template id="tBook">
+        <div>
+            <p>
+                <strong><!-- Titulo --></strong> - <!-- Autor -->  <button>Prestar</button>
+            </p>
+        </div>
+    </template>
+
+    <template id="tTable-row">
+        <tr>
+            <td><!-- titulo --></td>
+            <td><!-- autor --></td>
+            <td><!-- total --></td>
+            <td><!-- disponibles --></td>
+            <td><!-- prestados --></td>
+            <td> <button> Devolver </button> </td>
+        </tr>
+    </template>
+
+    <template id="tSumary">
+        Total ejemplares: <!-- Total ejemplares --> | Total prestados: <!-- Total prestados --> }
+    </template>
+</body>
+</html>
