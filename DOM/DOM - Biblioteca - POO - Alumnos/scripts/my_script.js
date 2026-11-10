@@ -20,17 +20,17 @@
 // ]
 
 class Libro{
-    constructor(isbn, titulo, autor){
+    constructor(isbn, titulo, autor,cantidad){
         this.isbn = isbn
         this.titulo = titulo
         this.autor = autor
-        
+        this.cantidad = cantidad
     }
 }
 
 class UI{
-    constructor(libros, ejemplares){
-        this.libros=libros
+    constructor(libros,ejemplares){
+        this.libros = libros
         this.ejemplares = ejemplares
 
         this.listaLibros = document.querySelector("#lista-libros")
@@ -40,43 +40,61 @@ class UI{
         this.showLista()
         this.showTabla()
         this.showResumen()
+        // this.addEvents()
     }
     showLista(){
+        this.listaLibros.innerHTML=libros.reduce((anterior,actual)=>anterior+`
+        <div>
+            <p>
+                <strong>${actual.titulo}</strong> - ${actual.autor}  <button data-id="${actual.isbn}">Prestar</button>
+            </p>
+        </div>
+        `,'')
+    }
+    showTabla(){
         
+    }
+    showResumen(){
+        this.resumen.innerHTML=`
+        Total ejemplares: ${ejemplares.count()} | Total prestados: ${ejemplares.count()}  
+        `
+    }
+    addEvents(){
+
     }
 }
 
 class Ejemplar{
-    constructor(libro, cantidad, disponibles, prestados){
+    constructor(id, libro, cantidad, prestados){
+        this.id= id
         this.libro = libro
         this.cantidad = cantidad
-        this.disponibles = disponibles
         this.prestados = prestados
     }
 
     prestar(){
-        this.disponibles --
-        return this.prestados++
     }
 
     devolver(){
-        if(this.ejemplares == this.disponibles){
-            return this.disponibles
-        } else{
-            this.prestados--
-            return this.disponibles++
-        }
     }
 }
 
 const libros = [
-    new Libro("978-84-376-0494-7","Don Quijote de la Mancha","Miguel de Cervantes"),
-    new Libro("978-84-204-8270-5","Cien años de soledad","Gabriel García Márquez"),
-    new Libro("978-84-670-5205-2","La sombra del viento","Carlos Ruiz Zafón")
+    new Libro("978-84-376-0494-7","Don Quijote de la Mancha","Miguel de Cervantes",3),
+    new Libro("978-84-204-8270-5","Cien años de soledad","Gabriel García Márquez",2),
+    new Libro("978-84-670-5205-2","La sombra del viento","Carlos Ruiz Zafón",4)
 ]
 
-const ejemplares = [
-    new Ejemplar(libros[0], 3,3,0),
-    new Ejemplar(libros[1], 2,2,0),
-    new Ejemplar(libros[2], 4,4,0)
-]
+const ejemplares = []
+
+for(let i = 0; i < 9; i++){
+    if (i<3){
+        ejemplares.push(new Ejemplar(i,libros[0],false))
+    } else if(i<5){
+        ejemplares.push(new Ejemplar(i,libros[1],false))
+    } else{
+        ejemplares.push(new Ejemplar(i,libros[2],false))
+    }
+}
+
+const Interfaz= new UI(libros,ejemplares)
