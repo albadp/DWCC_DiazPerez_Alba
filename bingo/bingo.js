@@ -26,15 +26,23 @@
 //                                         Gerardo         7 9                  Ricardo
 
 
-function ganador(numeros, carton){
+function ganador(numeros, cartones){
+    numeros.forEach(numero => {
+        if(cartones.includes(numero)){
+            cartones.splice(cartones.indexOf(numero), 1)
+        }
+        
+    })
 
 }
 
 
 
 const numeros = [20, 23, 21, 32, 46, 30]
-let cartonDiana = [30, 21, 23, 32]
-let cartonMartin = [20, 21, 31, 46, 78, 23]
+const cartones= [{
+    carton: [30, 21, 23, 32]},
+    {carton: [20, 21, 31, 46, 78, 23]
+}]
 
 
 

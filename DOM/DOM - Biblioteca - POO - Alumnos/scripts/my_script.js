@@ -28,10 +28,41 @@ class Libro{
     }
 }
 
-class UI{
-    constructor(libros,ejemplares){
+class Ejemplar{
+    constructor(id, libro, prestado = false){
+        this.id= id
+        this.libro = libro
+        this.prestado = prestado
+    }
+
+    prestar(){
+        if(this.prestado){
+            return this.prestado
+        } else{
+            this.prestado = true
+        }
+    }
+
+    devolver(){
+        if(!this.prestado){
+            return this.prestado
+        } else{
+            this.prestado = false
+        }
+    }
+}
+
+class Biblioteca{
+    constructor(libros,ejemplares, cantidad){
         this.libros = libros
         this.ejemplares = ejemplares
+        this.cantidad = cantidad
+    }
+}
+
+class UI{
+    constructor(biblioteca){
+        this.biblioteca = biblioteca
 
         this.listaLibros = document.querySelector("#lista-libros")
         this.tablaLibros = document.querySelector("#tabla-libros")
@@ -43,10 +74,10 @@ class UI{
         // this.addEvents()
     }
     showLista(){
-        this.listaLibros.innerHTML=libros.reduce((anterior,actual)=>anterior+`
+        this.listaLibros.innerHTML=biblioteca.ejemplares.reduce((anterior,actual)=>anterior+`
         <div>
             <p>
-                <strong>${actual.titulo}</strong> - ${actual.autor}  <button data-id="${actual.isbn}">Prestar</button>
+                <strong>${actual.libro.titulo}</strong> - ${actual.libro.autor}  <button data-id="${actual.libro.isbn}">Prestar</button>
             </p>
         </div>
         `,'')
@@ -64,20 +95,7 @@ class UI{
     }
 }
 
-class Ejemplar{
-    constructor(id, libro, cantidad, prestados){
-        this.id= id
-        this.libro = libro
-        this.cantidad = cantidad
-        this.prestados = prestados
-    }
 
-    prestar(){
-    }
-
-    devolver(){
-    }
-}
 
 const libros = [
     new Libro("978-84-376-0494-7","Don Quijote de la Mancha","Miguel de Cervantes",3),
@@ -89,12 +107,14 @@ const ejemplares = []
 
 for(let i = 0; i < 9; i++){
     if (i<3){
-        ejemplares.push(new Ejemplar(i,libros[0],false))
+        ejemplares.push(new Ejemplar(i,libros[0]))
     } else if(i<5){
-        ejemplares.push(new Ejemplar(i,libros[1],false))
+        ejemplares.push(new Ejemplar(i,libros[1]))
     } else{
-        ejemplares.push(new Ejemplar(i,libros[2],false))
+        ejemplares.push(new Ejemplar(i,libros[2]))
     }
 }
+
+const biblioteca = new Biblioteca(libros, ejemplares,9)
 
 const Interfaz= new UI(libros,ejemplares)
