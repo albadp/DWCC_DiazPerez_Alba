@@ -27,22 +27,35 @@
 
 
 function ganador(numeros, cartones){
-    numeros.forEach(numero => {
-        if(cartones.includes(numero)){
-            cartones.splice(cartones.indexOf(numero), 1)
+    let ganadores = []
+    cartones.forEach(jugador => {
+        numeros.forEach(numero => {
+            if(jugador.carton.includes(numero)){
+                jugador.carton.splice(
+                    jugador.carton.indexOf(numero), 1)
+            }
+        })
+        if(jugador.carton.length === 0){
+            ganadores.push(jugador.nombre)
         }
-        
     })
-
+    return ganadores
 }
 
 
-
 const numeros = [20, 23, 21, 32, 46, 30]
-const cartones= [{
-    carton: [30, 21, 23, 32]},
-    {carton: [20, 21, 31, 46, 78, 23]
-}]
 
+const cartones = [
+    {
+        nombre: "Diana",
+        carton: [30, 21, 23, 32]
+    },
+    {
+        nombre: "Martin",
+        carton: [20, 21, 31, 46, 78, 23]
+    }
+]
+
+console.log("Ganadores:" + ganador(numeros, cartones))
 
 

@@ -36,15 +36,15 @@ function findGastoMin(numCompras, minCompe, minTencia, cestaCompe, cestaTencia){
     cestaCompe.sort()
     cestaTencia.sort()
     let gasto = 0
-    for(let i = 0; i<minCompe;i++){
+    for(let i = 0; i < minCompe; i++){
         gasto += cestaCompe.shift()
 
     }
-    for(let i = 0; i<minTencia;i++){
+    for(let i = 0; i < minTencia; i++){
         gasto += cestaTencia.shift()
     }
     numCompras -= minCompe + minTencia
-    for(let i = 0; i<numCompras;i++){
+    for(let i = 0; i < numCompras; i++){
         if (cestaCompe[0] < cestaTencia[0]){
             gasto += cestaCompe.shift()
         } else {
