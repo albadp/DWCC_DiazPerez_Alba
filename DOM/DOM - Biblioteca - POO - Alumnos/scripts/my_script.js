@@ -1,120 +1,113 @@
-// const libros=[
-//     {
-//         ISBN:"978-84-376-0494-7",
-//         titulo:"Don Quijote de la Mancha",
-//         autor:"Miguel de Cervantes",
-//         ejemplares:3
-//     },
-//     {
-//         ISBN:"978-84-204-8270-5",
-//         titulo:"Cien años de soledad",
-//         autor:"Gabriel García Márquez",
-//         ejemplares:2
-//     },
-//     {
-//         ISBN:"978-84-670-5205-2",
-//         titulo:"La sombra del viento",
-//         autor:"Carlos Ruiz Zafón",
-//         ejemplares:4
-//     }
-// ]
-
-class Libro{
-    constructor(isbn, titulo, autor,cantidad){
-        this.isbn = isbn
-        this.titulo = titulo
-        this.autor = autor
-        this.cantidad = cantidad
+const libros=[
+    {
+        ISBN:"978-84-376-0494-7",
+        titulo:"Don Quijote de la Mancha",
+        autor:"Miguel de Cervantes",
+        ejemplares:3,
+        prestados:0
+    },
+    {
+        ISBN:"978-84-204-8270-5",
+        titulo:"Cien años de soledad",
+        autor:"Gabriel García Márquez",
+        ejemplares:2,
+        prestados:0
+    },
+    {
+        ISBN:"978-84-670-5205-2",
+        titulo:"La sombra del viento",
+        autor:"Carlos Ruiz Zafón",
+        ejemplares:4,
+        prestados:0
     }
-}
-
-class Ejemplar{
-    constructor(id, libro, prestado = false){
-        this.id= id
-        this.libro = libro
-        this.prestado = prestado
-    }
-
-    prestar(){
-        if(this.prestado){
-            return this.prestado
-        } else{
-            this.prestado = true
-        }
-    }
-
-    devolver(){
-        if(!this.prestado){
-            return this.prestado
-        } else{
-            this.prestado = false
-        }
-    }
-}
-
-class Biblioteca{
-    constructor(libros,ejemplares, cantidad){
-        this.libros = libros
-        this.ejemplares = ejemplares
-        this.cantidad = cantidad
-    }
-}
-
-class UI{
-    constructor(biblioteca){
-        this.biblioteca = biblioteca
-
-        this.listaLibros = document.querySelector("#lista-libros")
-        this.tablaLibros = document.querySelector("#tabla-libros")
-        this.resumen = document.querySelector("#resumen")
-
-        this.showLista()
-        this.showTabla()
-        this.showResumen()
-        // this.addEvents()
-    }
-    showLista(){
-        this.listaLibros.innerHTML=biblioteca.ejemplares.reduce((anterior,actual)=>anterior+`
-        <div>
-            <p>
-                <strong>${actual.libro.titulo}</strong> - ${actual.libro.autor}  <button data-id="${actual.libro.isbn}">Prestar</button>
-            </p>
-        </div>
-        `,'')
-    }
-    showTabla(){
-        
-    }
-    showResumen(){
-        this.resumen.innerHTML=`
-        Total ejemplares: ${ejemplares.count()} | Total prestados: ${ejemplares.count()}  
-        `
-    }
-    addEvents(){
-
-    }
-}
-
-
-
-const libros = [
-    new Libro("978-84-376-0494-7","Don Quijote de la Mancha","Miguel de Cervantes",3),
-    new Libro("978-84-204-8270-5","Cien años de soledad","Gabriel García Márquez",2),
-    new Libro("978-84-670-5205-2","La sombra del viento","Carlos Ruiz Zafón",4)
 ]
 
-const ejemplares = []
+const $d=document,
+    $listaLibros = $d.querySelector("#lista-libros"),
+    $tablaLibros = $d.querySelector("#tabla-libros"),
+    // $listaLiros=$d.getElementById("lista-libros")
+    $resumen = $d.querySelector("#resumen")
+    
 
-for(let i = 0; i < 9; i++){
-    if (i<3){
-        ejemplares.push(new Ejemplar(i,libros[0]))
-    } else if(i<5){
-        ejemplares.push(new Ejemplar(i,libros[1]))
-    } else{
-        ejemplares.push(new Ejemplar(i,libros[2]))
+$tablaLibros.addEventListener("click",ev=>{
+    ev.preventDefault()
+
+    let id=ev.target.dataset.libro
+    if(id){
+        // console.log(id)
+        const libro = libros.find(libro=>libro.ISBN==id)
+        if(libro.prestados>0){
+            libro.prestados--
+            renderBiblioteca(libros)
+        }else{
+            alert("No se puede devolver un libro no prestado")
+        }
     }
+})
+
+$listaLibros.addEventListener("click",ev=>{
+    ev.preventDefault()
+
+    let id=ev.target.dataset.libro
+    if(id){
+        const libro = libros.find(libro=>libro.ISBN==id)
+        let disponibles=libro.ejemplares-libro.prestados
+        if(disponibles>0){
+            libro.prestados++
+            renderBiblioteca(libros)
+        }else{
+            alert("No hay libros disonibles para prestar")
+        }
+    }
+})
+
+function renderLibros(libros){
+    $listaLibros.innerHTML = libros.reduce((anterior,actual)=>{return anterior+`
+        <div>
+            <p>
+                <strong>${actual.titulo}</strong> - ${actual.autor}  
+                <button data-libro="${actual.ISBN}">Prestar</button>
+            </p>
+        </div>`
+    },'')
 }
 
-const biblioteca = new Biblioteca(libros, ejemplares,9)
+function renderBiblioteca(libros){
+    const $tTableRow = $d.querySelector("#tTable-row").content,
+        $fragmento=$d.createDocumentFragment()
 
-const Interfaz= new UI(libros,ejemplares)
+    $tablaLibros.innerHTML=""
+    libros.forEach(libro => {
+        const $clon=$tTableRow.cloneNode(true)
+        // $tds=$clon.querySelectorAll("td")
+        // $tds[0].innerHTML=libro.titulo
+        const [$titulo, $autor,$ejemplares, $disponibles,$prestados,$accion] = $clon.querySelectorAll("td")
+        $titulo.innerHTML=libro.titulo
+        $autor.innerHTML=libro.autor
+        $ejemplares.innerHTML=libro.ejemplares
+        $disponibles.innerHTML=libro.ejemplares-libro.prestados
+        $prestados.innerHTML=libro.prestados
+        $accion.querySelector("button").dataset.libro=libro.ISBN
+        // $accion.querySelector("button").setAttribute("data-libro",libro.ISBN)
+        $fragmento.appendChild($clon)
+    });
+    $tablaLibros.appendChild($fragmento)
+    renderResumen(libros)
+}
+
+function renderResumen(libros){
+    const totalEjemplares=libros.reduce((anterior,actual)=>anterior+actual.ejemplares,0)
+    const totalPrestados=libros.reduce((anterior,actual)=>anterior+actual.prestados,0)
+    const total=libros.reduce((anterior,actual)=>{
+        anterior.ejemplares+=actual.ejemplares
+        anterior.prestados+=actual.prestados
+        return anterior
+    },{ejemplares:0,prestados:0})
+
+    $resumen.innerHTML=`Total ejemplares: ${total.ejemplares} | Total prestados: ${total.prestados}`
+}
+
+$d.addEventListener("DOMContentLoaded",ev=>{
+    renderLibros(libros)
+    renderBiblioteca(libros)
+})
